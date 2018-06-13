@@ -5,19 +5,19 @@ worker.go
 This file defines two key concepts:
   - workerState: This struct type serves as a basic element
     for composition in other struct types which fulfill the
-    workerRunner interface.
-  - workerRunner: This interface demands the existence of the
+    WorkerRunner interface.
+  - WorkerRunner: This interface demands the existence of the
     Run method, which is the argument-less entrypoint for execution
     of a single benchmark worker's task.
 
 Note that while workerState meets most of the specification of the
-workerRunner interface, it's missing the Run method which should be defined
+WorkerRunner interface, it's missing the Run method which should be defined
 on concrete composers of the workerState struct.
 
 */
-package main
+package worker
 
-type workerRunner interface {
+type WorkerRunner interface {
 	Id() uint64
 	Run() float64
 	Results() *[]float64

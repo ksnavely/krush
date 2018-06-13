@@ -18,6 +18,9 @@ import (
 	"fmt"
 	"os"
 	"time"
+
+    "github.com/ksnavely/krush/internal/controller"
+    "github.com/ksnavely/krush/internal/worker"
 )
 
 type cliOpts struct {
@@ -60,8 +63,8 @@ func main() {
 	fmt.Printf("Welcome to Krush\n")
 	args := parseCLI()
 
-	workers := NewHTTPWorkers(args.Concurrency, args.TargetHost)
-	controller := NewBenchmarkController(args.RunDuration, workers)
+	workers := worker.NewHTTPWorkers(args.Concurrency, args.TargetHost)
+	controller := controller.NewBenchmarkController(args.RunDuration, workers)
 	results := controller.RunBenchmark()
 
 	var sum float64

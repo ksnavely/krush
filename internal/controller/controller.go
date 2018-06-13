@@ -6,24 +6,26 @@ This file implements the benchmarkController struct and its methods.
 
 The benchmarkController is a key orchestrator of benchmark activity.
 Notably, it holds Workers, a pointer to a slice of structs which satisfy
-the workerRunner interface.
+the WorkerRunner interface.
 
 The method RunBenchmark triggers to overall execution of benchmarking across
 the specified number of workers. The benchmark runs until RunDuration has
 passed at which point the workers are terminated.
 
 */
-package main
+package controller
 
 import (
 	"fmt"
 	"sync"
 	"time"
+
+    "github.com/ksnavely/krush/internal/worker"
 )
 
 type benchmarkController struct {
 	Results     []float64
-	Workers     *[]workerRunner
+	Workers     *[]worker.WorkerRunner
 	StopChan    chan string
 	RunDuration time.Duration
 }
@@ -59,7 +61,7 @@ func (c *benchmarkController) RunBenchmark() []float64 {
 	return c.Results
 }
 
-func (c *benchmarkController) ManagedRun(workerPtr *workerRunner, resultsChan chan<- float64, stopChan <-chan string, wg *sync.WaitGroup) {
+func (c *benchmarkController) ManagedRun(workerPtr *worker.WorkerRunner, resultsChan chan<- float64, stopChan <-chan string, wg *sync.WaitGroup) {
 	var result float64
 	var stop bool
 	worker := *workerPtr
@@ -85,7 +87,7 @@ func (c *benchmarkController) ManagedRun(workerPtr *workerRunner, resultsChan ch
 	wg.Done()
 }
 
-func NewBenchmarkController(runDuration time.Duration, workers *[]workerRunner) benchmarkController {
+func NewBenchmarkController(runDuration time.Duration, workers *[]worker.WorkerRunner) benchmarkController {
 	fmt.Printf("\n  Initializing the benchmarkController...\n")
 	c := benchmarkController{RunDuration: runDuration, Workers: workers}
 	return c

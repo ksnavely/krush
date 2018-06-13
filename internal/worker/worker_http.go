@@ -3,7 +3,7 @@
 worker_http.go
 
 Defined in this file is the httpWorkerState struct which satisfies
-the workerRunner interface.
+the WorkerRunner interface.
 
 httpWorkerState's Run method performs a simple HTTP GET and returns the
 time needed to execute the request.
@@ -12,7 +12,7 @@ At the time of writing it's the only composer of workerState, howerver
 this is meant to signal a direction towards multiple benchmark worker types.
 
 */
-package main
+package worker
 
 import (
 	"fmt"
@@ -47,11 +47,11 @@ func httpGet(url string) {
 	}
 }
 
-func NewHTTPWorkers(num_workers uint64, url string) *[]workerRunner {
-	workers := []workerRunner{}
+func NewHTTPWorkers(num_workers uint64, url string) *[]WorkerRunner {
+	workers := []WorkerRunner{}
 	for i := uint64(0); i < num_workers; i++ {
 		fmt.Printf("Creating worker with id: %v\n", i)
-		var worker workerRunner
+		var worker WorkerRunner
 		worker = &httpWorkerState{url: url, workerState: workerState{id: i, results: new([]float64)}}
 		workers = append(workers, worker)
 	}
