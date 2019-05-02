@@ -33,7 +33,7 @@ func parseCLI() cliOpts {
 	args := cliOpts{}
 	flag.StringVar(&args.TargetHost, "TargetHost", "", "The target URL to benchmark")
 	flag.Uint64Var(&args.Concurrency, "Concurrency", 0, "The number of worker goroutines to use")
-	flag.DurationVar(&args.RunDuration, "RunDuration", 0, "The number of worker goroutines to use")
+	flag.DurationVar(&args.RunDuration, "RunDuration", 0, "The duration of the benchmark e.g. '60s'")
 	flag.Parse()
 	fmt.Printf("\n  Arguments:\n%+v\n\n", args)
 	validateCLI(args)

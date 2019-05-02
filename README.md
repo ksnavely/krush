@@ -4,12 +4,9 @@ Basic performance benchmarking to help me learn go and improve my kdevops.com st
 
 I'm just learning go so please forgive the repo structure as I learn the accepted patterns. :)
 
-## Build
+## Usage
 
 Have a properly configured GOPATH and clone this repo to `$GOPATH/src/github.com/ksnavely/krush`.
 
-`go build . && go install .
-
-## Usage
-
+`make install`
 `krush -h` for more usage information.
